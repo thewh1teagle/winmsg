@@ -1,0 +1,16 @@
+[package]
+name = "winmsg"
+version = "0.1.0"
+edition = "2021"
+description = "feature rich message box in windows"
+license-file = "MIT-LICENSE.txt"
+homepage = "https://github.com/thewh1teagle/winmsg"
+documentation = "https://github.com/thewh1teagle/winmsg"
+repository = "https://github.com/thewh1teagle/winmsg"
+readme = "README.md"
+keywords = ["windows", "winapi", "messagebox"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+winapi = { version = "0.3.9", features = ["winuser"] }
