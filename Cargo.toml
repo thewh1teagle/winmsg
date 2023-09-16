@@ -1,6 +1,6 @@
 [package]
 name = "winmsg"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 description = "feature rich message box in windows"
 license-file = "MIT-LICENSE.txt"
