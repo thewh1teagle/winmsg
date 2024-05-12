@@ -4,14 +4,14 @@ use windows::Win32::UI::WindowsAndMessaging::MessageBoxW;
 use windows::Win32::UI::WindowsAndMessaging::MESSAGEBOX_STYLE;
 
 mod enums;
-use enums::*;
+pub use enums::*;
 
 pub struct Options {
-    title: String,
-    description: String,
-    kind: MessageBoxType,
-    icon: Option<MessageBoxIconType>,
-    flags: Option<Vec<MessageBoxFlags>>,
+    pub title: String,
+    pub description: String,
+    pub kind: MessageBoxKind,
+    pub icon: Option<MessageBoxIconType>,
+    pub flags: Option<Vec<MessageBoxFlags>>,
 }
 
 impl Default for Options {
@@ -19,14 +19,14 @@ impl Default for Options {
         Self {
             title: "Message".into(),
             description: "".into(),
-            kind: MessageBoxType::OK,
+            kind: MessageBoxKind::OK,
             icon: None,
             flags: None,
         }
     }
 }
 
-pub fn message_box(options: Options) -> MessageBoxReturnCode {
+pub fn message_box(options: Options) -> Action {
     // convert title to LPCSTR
     let mut title_u16: Vec<u16> = options
         .title
@@ -44,7 +44,7 @@ pub fn message_box(options: Options) -> MessageBoxReturnCode {
     // apply message box type
     let mut utype = options.kind as u32;
     if let Some(icon) = options.icon {
-        utype = utype | icon as u32;
+        utype |= icon as u32;
     }
 
     // apply flags
@@ -66,16 +66,16 @@ pub fn message_box(options: Options) -> MessageBoxReturnCode {
     };
 
     match ret_value {
-        x if x == MessageBoxReturnCode::ABORT as i32 => MessageBoxReturnCode::ABORT,
-        x if x == MessageBoxReturnCode::CANCEL as i32 => MessageBoxReturnCode::CANCEL,
-        x if x == MessageBoxReturnCode::CONTINUE as i32 => MessageBoxReturnCode::CONTINUE,
-        x if x == MessageBoxReturnCode::IGNORE as i32 => MessageBoxReturnCode::IGNORE,
-        x if x == MessageBoxReturnCode::NO as i32 => MessageBoxReturnCode::NO,
-        x if x == MessageBoxReturnCode::OK as i32 => MessageBoxReturnCode::OK,
-        x if x == MessageBoxReturnCode::RETRY as i32 => MessageBoxReturnCode::RETRY,
-        x if x == MessageBoxReturnCode::TryAgain as i32 => MessageBoxReturnCode::TryAgain,
-        x if x == MessageBoxReturnCode::YES as i32 => MessageBoxReturnCode::YES,
-        _ => MessageBoxReturnCode::UNKNOWN,
+        x if x == Action::Abort as i32 => Action::Abort,
+        x if x == Action::Cancel as i32 => Action::Cancel,
+        x if x == Action::Continue as i32 => Action::Continue,
+        x if x == Action::Ignore as i32 => Action::Ignore,
+        x if x == Action::NO as i32 => Action::NO,
+        x if x == Action::OK as i32 => Action::OK,
+        x if x == Action::Retry as i32 => Action::Retry,
+        x if x == Action::TryAgain as i32 => Action::TryAgain,
+        x if x == Action::Yes as i32 => Action::Yes,
+        _ => Action::Uknown,
     }
 }
 

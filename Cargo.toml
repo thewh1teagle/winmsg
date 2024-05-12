@@ -13,4 +13,7 @@ keywords = ["windows", "winapi", "messagebox"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-windows = { version = "0.51.1", features = ["Win32_Foundation", "Win32_UI_WindowsAndMessaging"] }
+windows = { version = "0.51.1", features = [
+    "Win32_Foundation",
+    "Win32_UI_WindowsAndMessaging",
+] }

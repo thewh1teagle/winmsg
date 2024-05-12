@@ -1,5 +1,8 @@
 # winmsg
-Feature rich `rust` `crate` for [message box](https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-messageboxw) in `windows` 
+Feature rich `Rust` `crate` for creating a [message box](https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-messageboxw) in `Windows` 
+
+[![Crates](https://img.shields.io/crates/v/winmsg?logo=rust)](https://crates.io/crates/winmsg/)
+[![License](https://img.shields.io/github/license/thewh1teagle/winmsg?color=00aaaa&logo=license)](LICENSE.txt)
 
 # Install
 ```shell
@@ -8,55 +11,17 @@ cargo add winmsg
 
 # Basic usage
 ```rust
-use winmsg::message_box;
+use winmsg::{message_box, Options};
 
 fn main() {
-    // empty message box
-    message_box(None, None, None, None, None);
-
-    // simple message box with title and description
-    // anything passed as Some<T> since anything optional
-    message_box(Some("Title"), Some("Some description"), None, None, None);
+    message_box(Options {
+        title: "Hello world!".into(),
+        description: "How are you?".into(),
+        ..Default::default()
+    });
 }
-
 ```
 
-# Advanced usage
-```rust
-use winmsg::{
-    message_box, MessageBoxFlags, MessageBoxIconType, MessageBoxReturnCode, MessageBoxType,
-};
+# Examples
 
-fn main() {
-    // empty message box
-    message_box(None, None, None, None, None);
-
-    // simple message box with title and description
-    message_box(Some("Title"), Some("Some description"), None, None, None);
-
-    // yes no question
-    let ret = message_box(
-        Some("Question"),
-        Some("Are you sure?"),
-        Some(MessageBoxType::YesNo),
-        Some(MessageBoxIconType::QUESTION),
-        None,
-    );
-    match ret {
-        MessageBoxReturnCode::YES => println!("Yes..."),
-        _ => println!("No..."), // anything else
-    }
-
-    // ... special flags
-    message_box(
-        Some("RTL aligned message"),
-        Some("שלום וברכה"),
-        None,
-        None,
-        Some(vec![MessageBoxFlags::TextAlignRight]),
-    );
-
-    // ... and many more
-}
-
-```
+See [examples](examples)
