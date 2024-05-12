@@ -3,18 +3,19 @@
 mod tests {
     use crate::enums::*;
     use crate::message_box;
+    use crate::Options;
     
     #[test]
     fn simple() {
         // simple message box
-        message_box(Some("Error"), Some("something happend"), None, None, None);
+        message_box(Options::default());
     }
 
     #[test]
     fn yes_no() {
         
         // yes no
-        let ret = message_box(Some("Error"), Some("something happend"), Some(MessageBoxType::YesNo), None, None);
+        let ret = message_box(Options {kind: MessageBoxType::YesNo, ..Default::default()});
         match ret {
             MessageBoxReturnCode::YES => println!("yes..."),
             _ => println!("no...")
@@ -23,7 +24,7 @@ mod tests {
 
     #[test]
     fn retry_cancel() {
-        let ret = message_box(Some("Error"), Some("something happend"), Some(MessageBoxType::RetryCancel), None, None);
+        let ret = message_box(Options {kind: MessageBoxType::RetryCancel, ..Default::default()});
         match ret {
             MessageBoxReturnCode::RETRY => println!("retry..."),
             _ => println!("cancel...")
